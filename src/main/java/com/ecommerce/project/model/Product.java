@@ -20,6 +20,10 @@ public class Product {
     private double price;
     private double specialPrice;
 
+//    double check data type from repo
+    private double discount;
+    private String image;
+
     @ManyToOne
     @JoinColumn(name="categoryId")
     private Category category;
