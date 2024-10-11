@@ -25,14 +25,15 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ModelMapper modelMapper;
 
-    public ProductDTO addProduct(Long categoryId, Product product){
+    public ProductDTO addProduct(Long categoryId, ProductDTO productDTO){
 
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(()->
                         new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        product.setCategory(category);
+        Product product = modelMapper.map(productDTO, Product.class);
 
+        product.setCategory(category);
         product.setImage("default.png");
 
         double specialPrice = product.getPrice() - ((product.getDiscount() * 0.01) * (product.getPrice()));
@@ -81,10 +82,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductDTO updateProduct(Long productId, Product product) {
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
 //        check if path variable is valid and setters for body to DB
         Product productFromDb = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+
+//        Convert parameter datatype
+        Product product = modelMapper.map(productDTO, Product.class);
 
 //        FOR IMPROVEMENT: do not use the setter if getter from body is null / 0
         productFromDb.setProductName(product.getProductName());
