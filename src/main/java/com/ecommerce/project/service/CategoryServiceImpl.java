@@ -95,14 +95,13 @@ public class CategoryServiceImpl implements CategoryService{
     public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long categoryId) {
         Category savedCategory = categoryRepository.findById(categoryId)
                 .orElseThrow( () -> (new ResourceNotFoundException("Category", "categoryId", categoryId)));
-
 //        Map from DTO to main model
         Category category = modelMapper.map(categoryDTO, Category.class);
 
         category.setCategoryId(categoryId);
         savedCategory = categoryRepository.save(category);
-
 //        Map from main model to DTO
+        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(savedCategory, CategoryDTO.class);
 
     }
