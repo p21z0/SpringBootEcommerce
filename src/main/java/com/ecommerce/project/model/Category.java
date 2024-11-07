@@ -1,14 +1,13 @@
 package com.ecommerce.project.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity(name = "categories")
 @Data
@@ -22,5 +21,8 @@ public class Category {
     @NotBlank
     @Size(min = 5, message = "Must contain at least 5 char")
     private String categoryName;
+
+    @OneToMany(mappedBy ="category", cascade = CascadeType.ALL)
+    private List<Product> products;
 
 }
