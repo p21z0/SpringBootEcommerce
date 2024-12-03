@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +24,15 @@ public class Address {
     private Long AddressId;
 
     @NotBlank
-    @Size(min = 5, message="Street name must be at least 5 characters")
+    @Size(min = 2, message="Street name must be at least 5 characters")
     private String street;
 
     @NotBlank
-    @Size(min = 3, message="Building name must be at least 3 characters")
+    @Size(min = 2, message="Building name must be at least 2 characters")
     private String building;
 
     @NotBlank
-    @Size(min = 4, message="City must be at least 4 characters")
+    @Size(min = 2, message="City must be at least 2 characters")
     private String city;
 
     @NotBlank
@@ -43,11 +44,12 @@ public class Address {
     private String country;
 
     @NotBlank
-    @Size(min = 3, message="Pin/zipcode be at least 3 characters")
+    @Size(min = 2, message="Pin/zipcode be at least 2 characters")
     private String pincode;
 
-    @ManyToMany(mappedBy = "addresses")
-    private List<User> users = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public Address(String street, String building, String city, String state, String country, String pincode) {
         this.street = street;

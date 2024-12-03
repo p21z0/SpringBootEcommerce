@@ -1,5 +1,7 @@
 package com.ecommerce.project.security.response;
 
+import org.springframework.http.ResponseCookie;
+
 import java.util.List;
 
 public class UserInfoResponse {
@@ -13,6 +15,12 @@ public class UserInfoResponse {
         this.username = username;
         this.roles = roles;
         this.jwtToken = jwtToken;
+    }
+
+    public UserInfoResponse(Long id, String username, List<String> roles) {
+        this.id = id;
+        this.username = username;
+        this.roles = roles;
     }
 
     public Long getId() {
